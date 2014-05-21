@@ -1,0 +1,27 @@
+- Write a crapton of examples for `doctest` to test!
+- Document everything
+- Methods to add:
+ - convert from a list of byte values with control over bit order
+ - convert to & from integers with control over endianness and bit order
+   (cf. Python 3's `int.to_bytes`)
+ - convert to & from byte strings with control over bit order
+ - convert to & from strings of '0' and '1'?
+ - construction from a list of indices of bits to set and a width
+ - getting a list of indices of set/unset bits
+ - right-shifting with an option to keep the size the same?
+ - right-shifting with sign extension?
+ - left-shift, filling with 1's?
+ - rotationally-shifting the bits
+ - shifting while preserving width?
+ - number of set & unset bits (cf. count)
+ - trimming zeroes from either or both ends (cf. str.{lstrip,rstrip,strip})
+ - set/unset all bits?
+  - Make `bitvec[a:b] = boolean` set/unset all bits in the slice?
+ - one's and two's complement?
+ - "any", "all", and "none"?
+ - reverse the bit order in-place?
+ - test for subsetness?
+ - something similar to Perl's `vec` that sets the bits of a subvector so
+   that they equal a specified integer value but without changing any
+   lengths; cf. the __setitem__ behavior when assigning an integer to a slice
+ - __imul__
