@@ -42,21 +42,6 @@ class bitvector(object):
 	    self._size = len(obj) * 8
 	    if width is not None:
 		self.setWidth(width, fill)
-	elif isinstance(obj, list):  ### What about iterables and/or iterators?
-	    if width is not None:
-		if len(obj) <= width:
-		    obj = obj + [fill] * (width - len(obj))
-		else:
-		    obj = obj[0:width]
-	    bytes = []
-	    for byte in map(None, *[iter(obj)]*8):
-		b=0
-		for i, bit in zip(range(8), byte):
-		    if bit:
-			b |= 1 << i
-		bytes.append(b)
-	    self._blob = array('B', bytes)
-	    self._size = len(obj)
 	elif isinstance(obj, (int, long)):
 	    ### This ignores `fill` - should it?
 	    bytes = []
@@ -90,7 +75,21 @@ class bitvector(object):
 		self._size = width
 	    self._blob = array('B', bytes)
 	else:
-	    raise TypeError('invalid type passed to bitvector constructor')
+	    obj = list(obj)
+	    if width is not None:
+		if len(obj) <= width:
+		    obj = obj + [fill] * (width - len(obj))
+		else:
+		    obj = obj[0:width]
+	    bytes = []
+	    for byte in map(None, *[iter(obj)]*8):
+		b=0
+		for i, bit in zip(range(8), byte):
+		    if bit:
+			b |= 1 << i
+		bytes.append(b)
+	    self._blob = array('B', bytes)
+	    self._size = len(obj)
 
     def __getitem__(self, i):
 	if isinstance(i, slice):
