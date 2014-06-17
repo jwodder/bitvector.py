@@ -43,7 +43,7 @@ class bitvector(object):
 	    if width is not None:
 		self.setWidth(width, fill)
 	elif isinstance(obj, (int, long)):
-	    ### This ignores `fill` - should it?
+	    ### TODO: This ignores `fill` - should it?
 	    bytes = []
 	    if width is None:
 		if obj == -1:
@@ -111,13 +111,16 @@ class bitvector(object):
 	    return bool(self._blob[byte] & (1 << offset))
 
     def __setitem__(self, i, new):
-    ### Is this supposed to return something?
+    ### TODO: Is this supposed to return something?
 	if isinstance(i, slice):
 	    (start, stop, step) = i.indices(len(self))
-	    if start > stop: raise ValueError() ###
-	     ### Is there a better error or way to handle this?
+	    if start > stop:
+		### TODO: Is there a better error or way to handle this?  Lists
+		### seem to handle this situation oddly.
+		raise ValueError('bitvector.__setitem__: slice start cannot be'
+				 ' after stop')
 	    if step == 1:
-		### Make this part more efficient.
+		### TODO: Make this part more efficient.
 		new = bitvector(new)
 		# It's best to flush out construction errors before changing
 		# `self`'s width.
@@ -126,7 +129,7 @@ class bitvector(object):
 		self.extend(new)
 		self.extend(beyond)
 	    else:
-		### What types should be permitted for `new` here?  This
+		### TODO: What types should be permitted for `new` here?  This
 		### currently only works for iterable types with __len__
 		### methods, `list` and `bitvector` being the only such types
 		### that are also accepted by the `bitvector` constructor.
@@ -428,10 +431,10 @@ class bitvector(object):
     __rmul__ = __mul__
 
     def __contains__(self, other): return self.find(other) != -1
-	### Add an optimization for when `other` is a bool?
+	### TODO: Add an optimization for when `other` is a bool
 
     def count(self, sub, start=0, end=None):
-	### Add an optimization for when `other` is a bool?
+	### TODO: Add an optimization for when `other` is a bool
 	if not isinstance(sub, bitvector):
 	    sub = bitvector(sub)
 	if len(sub) == 0:
@@ -447,7 +450,8 @@ class bitvector(object):
 		start += len(sub)
 
     def insert(self, i, x):
-	### Should insertion of bitvectors also be supported, or just bools?
+	### TODO: Should insertion of bitvectors also be supported, or just
+	### bools?
 	if i < 0: i += len(self)
 	if i < 0: i = 0
 	if i == len(self):
@@ -511,8 +515,8 @@ class bitvector(object):
 	return -1
 
     def index(self, sub, start=0, end=None):
-        dex = self.find(sub, start, end)
-	if dex == -1: raise ValueError() ###
+	dex = self.find(sub, start, end)
+	if dex == -1: raise ValueError('bitvector.index(x): x not in bitvector')
 	else: return dex
 
 def revbyte(b):  # internal helper function

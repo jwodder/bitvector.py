@@ -1,5 +1,6 @@
 - Write a crapton of examples for `doctest` to test!
 - Document everything
+- Handle all of the sections marked "TODO" in the code
 - Methods to add:
  - convert from a list of byte values with control over bit order
  - convert to & from integers with control over endianness and bit order
