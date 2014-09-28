@@ -533,6 +533,26 @@ class bitvector(object):
 	self._blob = array('B')
 	self._size = 0
 
+    def listSetBits(self):
+	i=0
+	for byte in self._blob:
+	    for j in range(8):
+		if i >= self._size:
+		    break
+		if byte & (1 << j):
+		    yield i
+		i += 1
+
+    def listUnsetBits(self):
+	i=0
+	for byte in self._blob:
+	    for j in range(8):
+		if i >= self._size:
+		    break
+		if not (byte & (1 << j)):
+		    yield i
+		i += 1
+
 
 def revbyte(b):  # internal helper function
     b2 = 0

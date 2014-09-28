@@ -8,7 +8,6 @@
  - convert to & from byte strings with control over bit order
  - convert to & from strings of '0' and '1'?
  - construction from a list of indices of bits to set and a width
- - getting a list of indices of set/unset bits
  - right-shifting with an option to keep the size the same?
  - right-shifting with sign extension?
  - left-shift, filling with 1's?
