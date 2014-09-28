@@ -433,12 +433,11 @@ class bitvector(object):
 
     def __imul__(self, n):
 	if n <= 0:
-	    self._blob = array('B')
-	    self._size = 0
+	    self.clear()
 	else:
 	    tmp = self.copy()
 	    for _ in range(n-1):
-	        self.extend(tmp)
+		self.extend(tmp)
 	return self
 
     def __contains__(self, other): return self.find(other) != -1
@@ -529,6 +528,11 @@ class bitvector(object):
 	dex = self.find(sub, start, end)
 	if dex == -1: raise ValueError('bitvector.index(x): x not in bitvector')
 	else: return dex
+
+    def clear(self):
+	self._blob = array('B')
+	self._size = 0
+
 
 def revbyte(b):  # internal helper function
     b2 = 0
