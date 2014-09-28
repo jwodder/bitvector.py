@@ -355,6 +355,7 @@ class bitvector(object):
 	return self
 
     def setWidth(self, width, fill=False):
+	### TODO: Rename "resize"?
 	if width < 0: width = 0
 	if width < len(self):
 	    self._blob = self._blob[0 : (width+7)//8]
@@ -422,13 +423,23 @@ class bitvector(object):
 	    maxI = 7
 
     def __mul__(self, n):
-	if i <= 0: return bitvector()
+	if n <= 0: return bitvector()
 	prod = bitvector(self)
 	for i in range(n-1):
 	    prod.extend(self)
 	return prod
 
     __rmul__ = __mul__
+
+    def __imul__(self, n):
+	if n <= 0:
+	    self._blob = array('B')
+	    self._size = 0
+	else:
+	    tmp = self.copy()
+	    for _ in range(n-1):
+	        self.extend(tmp)
+	return self
 
     def __contains__(self, other): return self.find(other) != -1
 	### TODO: Add an optimization for when `other` is a bool

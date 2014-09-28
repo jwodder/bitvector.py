@@ -25,4 +25,7 @@
  - something similar to Perl's `vec` that sets the bits of a subvector so
    that they equal a specified integer value but without changing any
    lengths; cf. the __setitem__ behavior when assigning an integer to a slice
- - __imul__
+- Follow the instructions at <https://docs.python.org/2/distutils/index.html>
+- Make `toBytes` (and future methods with configurable bit order) take the bit
+  order as a boolean `bits_ascending` (or `bits_descending`?) keyword argument
+  instead of as a string
