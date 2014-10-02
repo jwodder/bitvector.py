@@ -3,7 +3,8 @@
 # Remember: As bitvector is a mutable type, a __hash__ method is not
 # appropriate.
 
-from array import array
+from array       import array
+from collections import defaultdict
 
 __all__ = ["bitvector"]
 
@@ -552,6 +553,33 @@ class bitvector(object):
 		if not (byte & (1 << j)):
 		    yield i
 		i += 1
+
+    @classmethod
+    def fromSetBits(cls, bits, width=None):
+	"""Constructs a `bitvector` from an iterable of indices of bits to set.
+	   If a negative index is encountered, `width` is added to it first; if
+	   the value is still negative or if `width` is `None`, a `ValueError`
+	   is raised."""
+	bytes = defaultdict(int)
+	maxB = 0
+	for b in bits:
+	    if b < 0 and width is not None:
+		b += width
+	    if b < 0:
+		raise ValueError('negative index')
+	    (byte, offset) = divmod(b,8)
+	    bytes[byte] |= 1 << offset
+	    maxB = max(b+1, maxB)
+	obj = cls()
+	if width is not None:
+	    if width < 0: raise ValueError('negative width')
+	    maxB = width
+	if maxB > 0:
+	    obj._blob = array('B', [bytes[i] for i in range((maxB+7) // 8)])
+	    obj._size = maxB
+	    if width is not None and width % 8 != 0:
+		obj._blob[width//8] &= (1 << (width % 8)) - 1
+	return obj
 
 
 def revbyte(b):  # internal helper function

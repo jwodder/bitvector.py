@@ -7,7 +7,6 @@
    (cf. Python 3's `int.to_bytes`)
  - convert to & from byte strings with control over bit order
  - convert to & from strings of '0' and '1'?
- - construction from a list of indices of bits to set and a width
  - right-shifting with an option to keep the size the same?
  - right-shifting with sign extension?
  - left-shift, filling with 1's?
@@ -28,3 +27,4 @@
 - Make `toBytes` (and future methods with configurable bit order) take the bit
   order as a boolean `bits_ascending` (or `bits_descending`?) keyword argument
   instead of as a string
+- Rethink how `fromSetBits` handles negative indices
