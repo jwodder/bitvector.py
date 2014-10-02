@@ -28,3 +28,5 @@
   order as a boolean `bits_ascending` (or `bits_descending`?) keyword argument
   instead of as a string
 - Rethink how `fromSetBits` handles negative indices
+- Abstract away the references to the elements of _blob being 8 bits so that
+  the sizes of the elements can be easily changed
