@@ -557,6 +557,10 @@ class bitvector(object):
     @classmethod
     def fromSetBits(cls, bits, width=None):
 	"""Constructs a `bitvector` from an iterable of indices of bits to set.
+	   If a width is given, indices greater than or equal to `width` will
+	   be discarded.  If a width is not given, the width of the resulting
+	   `bitvector` will be the largest index plus 1.
+
 	   If a negative index is encountered, `width` is added to it first; if
 	   the value is still negative or if `width` is `None`, a `ValueError`
 	   is raised."""
