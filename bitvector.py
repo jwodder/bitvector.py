@@ -441,8 +441,16 @@ class bitvector(object):
 		self.extend(tmp)
 	return self
 
-    def __contains__(self, other): return self.find(other) != -1
-	### TODO: Add an optimization for when `other` is a bool
+    def __contains__(self, other):
+	if other is True:
+	    return any(self._blob)
+	elif other is False:
+	    (bytes, offset) = divmod(self._size, 8)
+	    if any(b != 255 for b in self._blob[:bytes]):
+		return True
+	    return offset != 0 and ~self._blob[bytes] & ((1<<offset) - 1) != 0
+	else: 
+	    return self.find(other) != -1
 
     def count(self, sub, start=0, end=None):
 	### TODO: Add an optimization for when `other` is a bool
