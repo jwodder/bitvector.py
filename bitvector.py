@@ -234,17 +234,7 @@ class bitvector(object):
 
     copy = __copy__
 
-    def extend(self, other):
-	other = bitvector(other)
-	offset = self._size % 8
-	self._size += other._size
-	if offset != 0:
-	    other <<= offset
-	    self._blob[-1] |= other._blob[0]
-	    self._blob.extend(other.blob[1:])
-	else:
-	    self._blob.extend(other.blob)
-	return self
+    def extend(self, other): self += other #; return None
 
     def __len__(self): return self._size
 
@@ -260,7 +250,17 @@ class bitvector(object):
 	new.extend(self)
 	return new
 
-    __iadd__ = extend
+    def __iadd__(self, other):
+	other = bitvector(other)
+	offset = self._size % 8
+	self._size += other._size
+	if offset != 0:
+	    other <<= offset
+	    self._blob[-1] |= other._blob[0]
+	    self._blob.extend(other.blob[1:])
+	else:
+	    self._blob.extend(other.blob)
+	return self
 
     def __lshift__(self, n):
 	new = bitvector(self)
