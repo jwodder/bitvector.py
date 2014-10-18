@@ -543,6 +543,8 @@ class bitvector(object):
 	self._size = 0
 
     def listSetBits(self):
+	"""Returns an iterator of the indices of all set bits in the
+	   `bitvector`"""
 	i=0
 	for byte in self._blob:
 	    for j in range(8):
@@ -553,6 +555,8 @@ class bitvector(object):
 		i += 1
 
     def listUnsetBits(self):
+	"""Returns an iterator of the indices of all unset bits in the
+	   `bitvector`"""
 	i=0
 	for byte in self._blob:
 	    for j in range(8):
