@@ -13,7 +13,8 @@
  - rotationally-shifting the bits
  - shifting while preserving width?
  - number of set & unset bits (cf. count)
- - trimming zeroes from either or both ends (cf. str.{lstrip,rstrip,strip})
+ - `lstrip` - trim zeroes from the "top"
+ - `strip` - trim zeroes from both sides
  - set/unset all bits?
   - Make `bitvec[a:b] = boolean` set/unset all bits in the slice?
  - one's and two's complement?
@@ -30,3 +31,5 @@
 - Rethink how `fromSetBits` handles negative indices
 - Abstract away the references to the elements of _blob being 8 bits so that
   the sizes of the elements can be easily changed
+- Should __cmp__ compare bitvectors as though they were integers, i.e., with
+  the most significant (highest-index) bits compared first?

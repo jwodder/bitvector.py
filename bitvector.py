@@ -593,6 +593,20 @@ class bitvector(object):
 		obj._blob[width//8] &= (1 << (width % 8)) - 1
 	return obj
 
+    def rstrip(self, val=False):
+	"""Removes leading zero bits from the `bitvector`, that is, zero bits
+	   starting at index 0.  The `bitvector` is modified in place.  If
+	   `val` is `True`, one-bits are removed instead."""
+	val = bool(val)
+	for i in xrange(len(self._blob)):
+	    if self._blob[i] != (0xFF if val else 0):
+		for j in xrange(8):
+		    if bool(self._blob[i] & (1 << j)) != val:
+			break
+		del self[0:i*8+j]
+		return
+	self.clear()
+
 
 def revbyte(b):  # internal helper function
     b2 = 0
