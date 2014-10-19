@@ -7,6 +7,8 @@
    (cf. Python 3's `int.to_bytes`)
  - convert to & from byte strings with control over bit order
  - convert to & from strings of '0' and '1'?
+ - convert to & from sequences of ints with control over int size, endianness,
+   and bit order
  - right-shifting with an option to keep the size the same?
  - right-shifting with sign extension?
  - left-shift, filling with 1's?
@@ -33,3 +35,4 @@
   the sizes of the elements can be easily changed
 - Should __cmp__ compare bitvectors as though they were integers, i.e., with
   the most significant (highest-index) bits compared first?
+- Support Python 3

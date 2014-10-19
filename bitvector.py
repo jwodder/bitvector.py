@@ -68,7 +68,7 @@ class bitvector(object):
 			    bytes[-1] &= (1 << (9-unused)) - 1
 			self._size += 1
 	    else:
-		for i in range((width+7) // 8):
+		for i in xrange((width+7) // 8):
 		    (obj, b) = divmod(obj, 256)
 		    bytes.append(b)
 		if obj < 0 and width % 8 != 0:
@@ -85,7 +85,7 @@ class bitvector(object):
 	    bytes = []
 	    for byte in map(None, *[iter(obj)]*8):
 		b=0
-		for i, bit in zip(range(8), byte):
+		for i, bit in zip(xrange(8), byte):
 		    if bit:
 			b |= 1 << i
 		bytes.append(b)
@@ -183,7 +183,7 @@ class bitvector(object):
 			return
 		shiftBy = 8 - offset1 + offset2
 		carry = 0
-		for i in range(len(self._blob)-1, byte1, -1):
+		for i in xrange(len(self._blob)-1, byte1, -1):
 		    (self._blob[i], carry) \
 			= divmod(self._blob[i] | (carry << 8), 1 << shiftBy)
 		self._blob[byte1] |= (carry >> offset2) << offset1
@@ -192,7 +192,7 @@ class bitvector(object):
 		self._size -= shiftBy
 	    else:
 		delled = 0
-		for j in range(start, stop, step):
+		for j in xrange(start, stop, step):
 		    del self[j-delled]
 		    if step > 0:
 			delled += 1
@@ -205,7 +205,7 @@ class bitvector(object):
 	    b = self._blob[byte]
 	    self._blob[byte] = (b & (1 << offset)-1) \
 			     | ((b & (255 << offset+1)) >> 1)
-	    for j in range(byte+1, len(self._blob)):
+	    for j in xrange(byte+1, len(self._blob)):
 		if self._blob[j] & 1:
 		    self._blob[j-1] |= 1 << 7
 		self._blob[j] >>= 1
@@ -297,8 +297,9 @@ class bitvector(object):
     def __iter__(self):
 	i=0
 	for byte in self._blob:
-	    for j in range(8):
-		if i >= self._size: break
+	    for j in xrange(8):
+		if i >= self._size:
+		    break
 		yield bool(byte & (1 << j))
 		i += 1
 
@@ -321,7 +322,7 @@ class bitvector(object):
 	if not isinstance(other, bitvector):
 	    other = bitvector(other)
 	self.setWidth(min(self._size, other._size))
-	for i in range(len(self._blob)):
+	for i in xrange(len(self._blob)):
 	    self._blob[i] &= other._blob[i]
 	return self
 
@@ -336,7 +337,7 @@ class bitvector(object):
 	if not isinstance(other, bitvector):
 	    other = bitvector(other)
 	self.setWidth(max(self._size, other._size), False)
-	for i in range(len(other._blob)):
+	for i in xrange(len(other._blob)):
 	    self._blob[i] |= other._blob[i]
 	return self
 
@@ -351,7 +352,7 @@ class bitvector(object):
 	if not isinstance(other, bitvector):
 	    other = bitvector(other)
 	self.setWidth(max(self._size, other._size), False)
-	for i in range(len(other._blob)):
+	for i in xrange(len(other._blob)):
 	    self._blob[i] ^= other._blob[i]
 	return self
 
@@ -382,11 +383,11 @@ class bitvector(object):
 		    self._blob[byte1] ^= ((1 << offset2-offset1) - 1) << offset1
 		else:
 		    self._blob[byte1] ^= 255 << offset1
-		    for j in range(byte1+1, byte2):
+		    for j in xrange(byte1+1, byte2):
 			self._blob[j] ^= 255
 		    self._blob[byte2] ^= (1 << offset2) - 1
 	    else:
-		for j in range(start, stop, step):
+		for j in xrange(start, stop, step):
 		    self.toggle(j)
 	else:
 	    if i < 0:
@@ -419,14 +420,14 @@ class bitvector(object):
 	if len(self) == 0: return
 	maxI = len(self) % 8 or 7
 	for byte in reversed(self._blob):
-	    for i in range(maxI, -1, -1):
+	    for i in xrange(maxI, -1, -1):
 		yield bool(byte & (1 << i))
 	    maxI = 7
 
     def __mul__(self, n):
 	if n <= 0: return bitvector()
 	prod = bitvector(self)
-	for i in range(n-1):
+	for _ in xrange(n-1):
 	    prod.extend(self)
 	return prod
 
@@ -437,7 +438,7 @@ class bitvector(object):
 	    self.clear()
 	else:
 	    tmp = self.copy()
-	    for _ in range(n-1):
+	    for _ in xrange(n-1):
 		self.extend(tmp)
 	return self
 
@@ -483,7 +484,7 @@ class bitvector(object):
 			     | ((b & (255 << offset)) << 1)
 	    if x:
 		self._blob[byte] |= 1 << offset
-	    for j in range(byte+1, len(self._blob)):
+	    for j in xrange(byte+1, len(self._blob)):
 		(carry, self._blob[j]) = divmod(self._blob[j] << 1 | carry, 256)
 	    if len(self) % 8 == 0:
 		self._blob.append(carry)
@@ -501,7 +502,7 @@ class bitvector(object):
 	if len(self) % 8 != 0:
 	    self <<= 8 - len(self) % 8
 	self._blob.reverse()
-	for i in range(len(self._blob)):
+	for i in xrange(len(self._blob)):
 	    self._blob[i] = revbyte(self._blob[i])
 
     def find(self, sub, start=0, end=None):
@@ -547,7 +548,7 @@ class bitvector(object):
 	   `bitvector`"""
 	i=0
 	for byte in self._blob:
-	    for j in range(8):
+	    for j in xrange(8):
 		if i >= self._size:
 		    break
 		if byte & (1 << j):
@@ -559,7 +560,7 @@ class bitvector(object):
 	   `bitvector`"""
 	i=0
 	for byte in self._blob:
-	    for j in range(8):
+	    for j in xrange(8):
 		if i >= self._size:
 		    break
 		if not (byte & (1 << j)):
@@ -614,7 +615,7 @@ class bitvector(object):
 
 def revbyte(b):  # internal helper function
     b2 = 0
-    for i in range(8):
+    for i in xrange(8):
 	b2 <<= 1
 	if b & 1: b2 |= 1
 	b >>= 1
