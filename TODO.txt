@@ -15,8 +15,6 @@
  - rotationally-shifting the bits
  - shifting while preserving width?
  - number of set & unset bits (cf. count)
- - `lstrip` - trim zeroes from the "top"
- - `strip` - trim zeroes from both sides
  - set/unset all bits?
   - Make `bitvec[a:b] = boolean` set/unset all bits in the slice?
  - one's and two's complement?

@@ -603,14 +603,35 @@ class bitvector(object):
 	   starting at index 0.  The `bitvector` is modified in place.  If
 	   `val` is `True`, one-bits are removed instead."""
 	val = bool(val)
-	for i in xrange(len(self._blob)):
-	    if self._blob[i] != (0xFF if val else 0):
+	for (i,b) in enumerate(self._blob):
+	    if b != (0xFF if val else 0):
 		for j in xrange(8):
-		    if bool(self._blob[i] & (1 << j)) != val:
+		    if bool(b & (1 << j)) != val:
 			break
-		del self[0:i*8+j]
+		del self[:i*8+j]
 		return
 	self.clear()
+
+    def lstrip(self, val=False):
+	"""Removes trailing zero bits from the `bitvector`, that is, zero bits
+	   starting at index `len(self)-1`.  The `bitvector` is modified in
+	   place.  If `val` is `True`, one-bits are removed instead."""
+	val = bool(val)
+	for i in xrange(len(self._blob)-1, -1, -1):
+	    b = self._blob[i]
+	    if i == len(self._blob)-1 and self._size % 8 != 0 and val == True:
+		b = (b | (0xFF << (self._size % 8))) & 0xFF
+	    if b != (0xFF if val else 0):
+		for j in xrange(7, -1, -1):
+		    if bool(b & (1 << j)) != val:
+			break
+		del self[i*8+j+1:]
+		return
+	self.clear()
+
+    def strip(self, val=False):
+	self.lstrip(val)
+	self.rstrip(val)
 
 
 def revbyte(b):  # internal helper function
