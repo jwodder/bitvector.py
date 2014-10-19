@@ -5,6 +5,7 @@
 
 from array       import array
 from collections import defaultdict
+from itertools   import islice, chain, repeat, izip_longest
 
 __all__ = ["bitvector"]
 
@@ -76,18 +77,16 @@ class bitvector(object):
 		self._size = width
 	    self._blob = array('B', bytes)
 	else:
-	    obj = list(obj)
+	    # Assume `obj` is an iterable of bit values
+	    obj = iter(obj)
 	    if width is not None:
-		if len(obj) <= width:
-		    obj = obj + [fill] * (width - len(obj))
-		else:
-		    obj = obj[0:width]
+		obj = islice(chain(obj, repeat(fill)), width)
 	    bytes = []
-	    for i in xrange(0, len(obj), 8):
+	    for byte in izip_longest(*[obj]*8):
 		b=0
-		for j, bit in zip(xrange(8), obj[i:i+8]):
+		for i, bit in enumerate(byte):
 		    if bit:
-			b |= 1 << j
+			b |= 1 << i
 		bytes.append(b)
 	    self._blob = array('B', bytes)
 	    self._size = len(obj)
