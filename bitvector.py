@@ -405,11 +405,8 @@ class bitvector(object):
 	    self._blob[byte] |= 1 << offset
 	self._size += 1
 
-    def toBytes(self, bitorder='asc'):
-	if bitorder == 'desc':
-	    return map(revbyte, self._blob)
-	else:
-	    return list(self._blob)
+    def toBytes(self, ascending=True):
+	return map(None if ascending else revbyte, self._blob)
 
     def pop(self, i=-1):
 	x = self[i]

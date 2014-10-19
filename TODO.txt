@@ -25,12 +25,12 @@
    that they equal a specified integer value but without changing any
    lengths; cf. the __setitem__ behavior when assigning an integer to a slice
 - Follow the instructions at <https://docs.python.org/2/distutils/index.html>
-- Make `toBytes` (and future methods with configurable bit order) take the bit
-  order as a boolean `bits_ascending` (or `bits_descending`?) keyword argument
-  instead of as a string
 - Rethink how `fromSetBits` handles negative indices
 - Abstract away the references to the elements of _blob being 8 bits so that
   the sizes of the elements can be easily changed
 - Should __cmp__ compare bitvectors as though they were integers, i.e., with
   the most significant (highest-index) bits compared first?
 - Support Python 3
+
+- NOTE: Future methods with configurable bit order (à la `toBytes`) should take
+  the bit order as a boolean keyword argument `ascending`
