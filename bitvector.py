@@ -83,11 +83,11 @@ class bitvector(object):
 		else:
 		    obj = obj[0:width]
 	    bytes = []
-	    for byte in map(None, *[iter(obj)]*8):
+	    for i in xrange(0, len(obj), 8):
 		b=0
-		for i, bit in zip(xrange(8), byte):
+		for j, bit in zip(xrange(8), obj[i:i+8]):
 		    if bit:
-			b |= 1 << i
+			b |= 1 << j
 		bytes.append(b)
 	    self._blob = array('B', bytes)
 	    self._size = len(obj)
