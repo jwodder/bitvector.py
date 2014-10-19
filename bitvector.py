@@ -625,7 +625,7 @@ class bitvector(object):
 		for j in xrange(7, -1, -1):
 		    if bool(b & (1 << j)) != val:
 			break
-		del self[i*8+j+1:]
+		self.setWidth(i*8+j+1)
 		return
 	self.clear()
 
