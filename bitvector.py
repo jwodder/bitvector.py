@@ -407,6 +407,10 @@ class bitvector(object):
     def toBytes(self, ascending=True):
 	return map(None if ascending else revbyte, self._blob)
 
+    def toByteString(self, ascending=True):
+	f = chr if ascending else (lambda b: chr(revbyte(b)))
+	return ''.join(f(b) for b in self._blob)
+
     def pop(self, i=-1):
 	x = self[i]
 	del self[i]

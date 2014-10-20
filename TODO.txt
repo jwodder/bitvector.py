@@ -3,12 +3,12 @@
 - Handle all of the sections marked "TODO" in the code
 - Methods to add:
  - convert from a list of byte values with control over bit order
- - convert to & from integers with control over endianness and bit order
-   (cf. Python 3's `int.to_bytes`)
- - convert to & from byte strings with control over bit order
- - convert to & from strings of '0' and '1'?
  - convert to & from sequences of ints with control over int size, endianness,
    and bit order
+ - convert to & from integers with control over endianness and bit order
+   (cf. Python 3's `int.to_bytes`)
+ - convert from byte strings with control over bit order
+ - convert to & from strings of '0' and '1'?
  - right-shifting with an option to keep the size the same?
  - right-shifting with sign extension?
  - left-shift, filling with 1's?
@@ -20,7 +20,6 @@
  - one's and two's complement?
  - "any", "all", and "none"?
  - reverse the bit order in-place?
- - test for subsetness?
  - something similar to Perl's `vec` that sets the bits of a subvector so
    that they equal a specified integer value but without changing any
    lengths; cf. the __setitem__ behavior when assigning an integer to a slice
