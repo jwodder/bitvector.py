@@ -404,10 +404,10 @@ class bitvector(object):
 	    self._blob[byte] |= 1 << offset
 	self._size += 1
 
-    def toBytes(self, ascending=True):
+    def toInts(self, ascending=True):
 	return map(None if ascending else revbyte, self._blob)
 
-    def toByteString(self, ascending=True):
+    def toBytes(self, ascending=True):
 	f = chr if ascending else (lambda b: chr(revbyte(b)))
 	return ''.join(f(b) for b in self._blob)
 

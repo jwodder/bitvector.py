@@ -31,5 +31,5 @@
   the most significant (highest-index) bits compared first?
 - Support Python 3
 
-- NOTE: Future methods with configurable bit order (à la `toBytes`) should take
+- NOTE: Future methods with configurable bit order (à la `toInts`) should take
   the bit order as a boolean keyword argument `ascending`
