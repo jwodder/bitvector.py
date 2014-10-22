@@ -7,7 +7,6 @@
    and bit order
  - convert to & from integers with control over endianness and bit order
    (cf. Python 3's `int.to_bytes`)
- - convert from byte strings with control over bit order
  - convert to & from strings of '0' and '1'?
  - right-shifting with an option to keep the size the same?
  - right-shifting with sign extension?

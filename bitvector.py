@@ -409,7 +409,18 @@ class bitvector(object):
 
     def toBytes(self, ascending=True):
 	f = chr if ascending else (lambda b: chr(revbyte(b)))
-	return ''.join(f(b) for b in self._blob)
+	return ''.join(map(f, self._blob))
+
+    @classmethod
+    def fromBytes(cls, blob, ascending=True, width=None, fill=False):
+	# `blob` must be a `str` (`bytes` in Python 3)
+	f = ord if ascending else (lambda b: revbyte(ord(b)))
+	bv = cls()
+	bv._blob = array('B', map(f, blob))
+	bv._size = len(bv._blob) * 8
+	if width is not None:
+	    bv.setWidth(width, fill)
+	return bv
 
     def pop(self, i=-1):
 	x = self[i]
