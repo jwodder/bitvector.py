@@ -2,11 +2,10 @@
 - Document everything
 - Handle all of the sections marked "TODO" in the code
 - Methods to add:
- - convert from a list of byte values with control over bit order
- - convert to & from sequences of ints with control over int size, endianness,
-   and bit order
  - convert to & from integers with control over endianness and bit order
    (cf. Python 3's `int.to_bytes`)
+ - convert to & from sequences of ints with control over int size, endianness,
+   and bit order (Merge into `toInts`)
  - convert to & from strings of '0' and '1'?
  - right-shifting with an option to keep the size the same?
  - right-shifting with sign extension?
