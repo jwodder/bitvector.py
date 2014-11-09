@@ -81,15 +81,16 @@ class bitvector(object):
 	    obj = iter(obj)
 	    if width is not None:
 		obj = islice(chain(obj, repeat(fill)), width)
+	    self._size = 0
 	    bytes = []
 	    for byte in izip_longest(*[obj]*8):
 		b=0
 		for i, bit in enumerate(byte):
 		    if bit:
 			b |= 1 << i
+		    self._size += 1
 		bytes.append(b)
 	    self._blob = array('B', bytes)
-	    self._size = len(obj)
 
     def __getitem__(self, i):
 	if isinstance(i, slice):
