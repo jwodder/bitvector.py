@@ -6,10 +6,10 @@ def showBV(bv):
     print bv
     i=0
     for b in bv:
-	if i % 8 == 0 and i != 0:
-	    sys.stdout.write('.')
-	sys.stdout.write('1' if b else '0')
-	i += 1
+        if i % 8 == 0 and i != 0:
+            sys.stdout.write('.')
+        sys.stdout.write('1' if b else '0')
+        i += 1
     sys.stdout.write("\n")
 
 #bv = bitvector(0b1010110111011111011111111)
