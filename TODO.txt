@@ -18,10 +18,11 @@
  - one's and two's complement?
  - "any", "all", and "none"?
  - reverse the bit order in-place?
- - something similar to Perl's `vec` that sets the bits of a subvector so
-   that they equal a specified integer value but without changing any
-   lengths; cf. the __setitem__ behavior when assigning an integer to a slice
+ - something similar to Perl's `vec` that sets the bits of a subvector so that
+   they equal a specified integer value but without changing any lengths; cf.
+   the __setitem__ behavior when assigning an integer to a slice
 - Follow the instructions at <https://docs.python.org/2/distutils/index.html>
+  (or, better, <https://python-packaging-user-guide.readthedocs.org/en/latest/distributing/>)
 - Rethink how `fromSetBits` handles negative indices
 - Abstract away the references to the elements of _blob being 8 bits so that
   the sizes of the elements can be easily changed

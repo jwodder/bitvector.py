@@ -230,9 +230,7 @@ class bitvector(object):
 
     def __long__(self): return long(int(self))
 
-    def __copy__(self): return bitvector(self)
-
-    copy = __copy__
+    def copy(self): return bitvector(self)
 
     def extend(self, other): self += other #; return None
 
@@ -466,7 +464,7 @@ class bitvector(object):
             return self.find(other) != -1
 
     def count(self, sub, start=0, end=None):
-        ### TODO: Add an optimization for when `other` is a bool
+        ### TODO: Add an optimization for when `sub` is a bool
         if not isinstance(sub, bitvector):
             sub = bitvector(sub)
         if len(sub) == 0:
